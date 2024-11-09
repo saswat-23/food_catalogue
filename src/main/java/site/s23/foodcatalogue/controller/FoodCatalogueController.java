@@ -37,4 +37,11 @@ public class FoodCatalogueController {
 		return new ResponseEntity<>(foodCatalogueDetails, HttpStatus.OK);
 	}
 	
+	@GetMapping("/getItem/{itemId}")
+	public ResponseEntity<FoodItemDTO> getFoodItemDetails(@PathVariable int itemId) {
+		
+		FoodItemDTO itemDetails = foodCatalogueService.getFoodItemDetailsById(itemId);
+		return new ResponseEntity<>(itemDetails, HttpStatus.OK);
+	}
+	
 }

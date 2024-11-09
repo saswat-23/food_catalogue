@@ -1,6 +1,7 @@
 package site.s23.foodcatalogue.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,13 +42,17 @@ public class FoodCatalogueService {
 	
 	
 	protected RestaurantDTO getRestaurantInfoById(int restaurantId) {
-		
 		return restTemplate.getForObject("http://RESTAURANT-SERVICE/restaurant/fetchById/"+restaurantId, RestaurantDTO.class);
-//		return new RestaurantDTO(restaurantId, "DummyRest", "DummyAddr", "DummyCity", "DummyDescr");
 	}
 	
 	protected List<FoodItem> getFoodItemByRestaurantId(int restaurantId) {
 		return foodItemRepo.findByRestaurantId(restaurantId);
+	}
+
+	public FoodItemDTO getFoodItemDetailsById(int itemId) {
+		
+		Optional<FoodItem> foodItem = foodItemRepo.findById(itemId);
+		return FoodCatalogueUtility.getFoodItemDTOFromFoodItemEntity(foodItem.get(), new FoodItemDTO());
 	}
 	
 	
